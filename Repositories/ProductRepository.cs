@@ -32,9 +32,12 @@ public class ProductRepository : IProduct
     public async Task<List<Product>> GetAllProducts(bool featureProducts)
     {
         if (featureProducts)
-            return await _appDbContext.Products.Where(_ => _.Featured).ToListAsync();
+            return await _appDbContext.Products
+                .Where(_ => _.Featured)
+                .Include(_ => _.Category)
+                .ToListAsync();
         else
-            return await _appDbContext.Products.ToListAsync();
+            return await _appDbContext.Products.Include(_ => _.Category).ToListAsync();
     }
 
     private async Task<(bool, string)> CheckName(string name)
