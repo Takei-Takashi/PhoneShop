@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using PhoneShopServer.Controllers;
 using PhoneShopServer.Data;
 using PhoneShopServer.Repositories;
-using PhoneShopShare.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +22,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddScoped<IProduct, ProductRepository>();
+builder.Services.AddScoped<ICategory, CategoryRepository>();
+builder.Services.AddScoped<IUserAccount, UserAccountRepository>();
 
 var app = builder.Build();
 

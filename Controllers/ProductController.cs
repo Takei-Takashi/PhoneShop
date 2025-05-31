@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PhoneShopShare.Contracts;
+using PhoneShopServer.Repositories;
 using PhoneShopShare.Models;
 using PhoneShopShare.Responses;
 
@@ -10,7 +10,7 @@ namespace PhoneShopServer.Controllers;
 [ApiController]
 public class ProductController(IProduct productService) : ControllerBase
 {
-        [HttpGet]
+    [HttpGet]
     public async Task<ActionResult<List<Product>>> GetAllProduct(bool featured)
     {
         var products = await productService.GetAllProducts(featured);
@@ -20,7 +20,7 @@ public class ProductController(IProduct productService) : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ServiceResponse>> AddProduct(Product model)
     {
-        if(model is null)
+        if (model is null)
             return BadRequest("Model is null");
         var reponse = await productService.AddProduct(model);
         return Ok(reponse);
